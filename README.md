@@ -10,7 +10,7 @@ Class for reading and writing a stream in BSON format
 * Version 1 from 12/2020
 
 ## Usage
-```
+```pascal
 uses 
   kxBSON;
 
