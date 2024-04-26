@@ -32,10 +32,14 @@
 
 unit kxBSON;
 
+{$IFDEF FPC}
+{$MODE DELPHI}
+{$ENDIF}
+
 interface
 
 uses
-    System.DateUtils,
+    DateUtils,
     SysUtils,
     Classes;
 
@@ -436,7 +440,7 @@ end;
 procedure TBSONDocument.SaveToFile(aFilename: string);
 var F: TFileStream;
 begin
-    F:=TFileStream.Create(FileCreate(aFilename));
+    F:=TFileStream.Create(aFilename, fmCreate);
     try
         WriteStream(F);
     finally
@@ -1053,7 +1057,11 @@ var P:PWideChar;
 begin
     SetLength(result, sizeof(Value)*2);
     P:=@(result[1]);
+    {$IFDEF FPC}
+    BinToHex(@(Value[0]), PChar(P), sizeof(Value));
+    {$ELSE}
     BinToHex(@(Value[0]), P, sizeof(Value));
+    {$ENDIF}
 end;
 
 {$ENDREGION}
@@ -1393,7 +1401,11 @@ var P:PWideChar;
 begin
     SetLength(result, sizeof(Value)*2);
     P:=@(result[1]);
+    {$IFDEF FPC}
+    BinToHex(@Value, PChar(P), sizeof(Value));
+    {$ELSE}
     BinToHex(@Value, P, sizeof(Value));
+    {$ENDIF}
 end;
 
 {$ENDREGION}
