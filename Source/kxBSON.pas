@@ -1577,7 +1577,8 @@ var i: Integer;
 begin
     // Array of items has name "0", "1", ...
     for i:=0 to Count-1 do begin
-        PBSONItemBase(Items[i]).Name:=IntToStr(i);
+        if PBSONItemBase(Items[i]).Name = '' then
+          PBSONItemBase(Items[i]).Name:=IntToStr(i);
     end;
 end;
 
