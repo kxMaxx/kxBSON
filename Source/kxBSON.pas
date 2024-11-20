@@ -486,7 +486,8 @@ begin
         l:=l-1 { NULL };
         // Known len ...
         SetLength(sUTF8, l);
-        F.read(sUTF8[1], l);
+        if l > 1 then
+            F.read(sUTF8[1], l);
         TBSONItemBase.ReadStreamNull(F);
     end else begin
         // Unknown len, parse until found NULL ...
@@ -514,7 +515,8 @@ begin
     sLen:=Length(sUTF8)+1 { NULL };
     if (aWriteLen) then
         F.write(sLen, sizeof(Integer));
-    F.write(sUTF8[1], sLen-1);
+    if sLen > 1 then
+        F.write(sUTF8[1], sLen-1);
     F.write(cBSON_NULL, sizeof(cBSON_NULL));
 end;
 
@@ -1577,7 +1579,8 @@ var i: Integer;
 begin
     // Array of items has name "0", "1", ...
     for i:=0 to Count-1 do begin
-        PBSONItemBase(Items[i]).Name:=IntToStr(i);
+        if PBSONItemBase(Items[i]).Name = '' then
+          PBSONItemBase(Items[i]).Name:=IntToStr(i);
     end;
 end;
 
