@@ -10,8 +10,6 @@ object Main: TMain
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
-  OldCreateOrder = False
-  PixelsPerInch = 96
   TextHeight = 13
   object PTop: TPanel
     Left = 0

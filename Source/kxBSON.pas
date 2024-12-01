@@ -26,14 +26,17 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 
-  Version: 1.0 | 12/2020
+  Version: 1.0 | 2020-12
   - initial release
+  Version: 1.1 | 2024-12-01
+  - fixes for freepascal; thx to @tempraturbo
+  - empty string read/write; thx to @tempraturbo
  ================================================================================}
 
 unit kxBSON;
 
 {$IFDEF FPC}
-{$MODE DELPHI}
+  {$MODE DELPHI}
 {$ENDIF}
 
 interface
@@ -486,7 +489,8 @@ begin
         l:=l-1 { NULL };
         // Known len ...
         SetLength(sUTF8, l);
-        F.read(sUTF8[1], l);
+        if l>0 then
+            F.read(sUTF8[1], l);
         TBSONItemBase.ReadStreamNull(F);
     end else begin
         // Unknown len, parse until found NULL ...
@@ -514,7 +518,8 @@ begin
     sLen:=Length(sUTF8)+1 { NULL };
     if (aWriteLen) then
         F.write(sLen, sizeof(Integer));
-    F.write(sUTF8[1], sLen-1);
+    if sLen > 1 then
+        F.write(sUTF8[1], sLen-1 { NULL });
     F.write(cBSON_NULL, sizeof(cBSON_NULL));
 end;
 

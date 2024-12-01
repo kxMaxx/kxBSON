@@ -108,6 +108,9 @@ begin
     FBSONDoc.Values.Add( TBSONItemDouble.Create('13', 1) );
     FBSONDoc.Values.Add( TBSONItemDouble.Create('14', Pi) );
 
+    FBSONDoc.Values.Add( TBSONItemString.Create('String1', 'ABC') );
+    FBSONDoc.Values.Add( TBSONItemString.Create('String2', '1') );
+    FBSONDoc.Values.Add( TBSONItemString.Create('String3(empty)', '') );
 
     I1:=TBSONItemArray.Create('Arr1');
     FBSONDoc.Values.Add( I1 );
